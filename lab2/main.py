@@ -33,31 +33,33 @@ def gurvits_func(matrix):
     results = map(lambda x: y*min(x)+(1-y)*(max(x)), matrix)
     return results, max(results), results.index(max(results))
 
-with open('input.csv') as csv_file:
-    stream_reader = csv.reader(csv_file, delimiter=',')
-    matrix = []
-    names = []
-    for row in stream_reader:
-        name = row[0]
-        names.append(name)
-        params = [float(i) for i in row[1:]]
-        matrix.append(params)
-vald = vald_func(matrix)
-minmax = minmax_func(matrix)
-gurvits = gurvits_func(matrix)
-sevidj = sevidj_func(matrix)
-laplas = laplas_func(matrix)
 
-table = Texttable(max_width=150)
-table.set_deco(Texttable.HEADER)
-table.set_precision(1)
-table.add_rows([['Actions'] + ['p{}'.format(i) for i in range(len(matrix[0]))] + ['Vald', 'Minmax', 'Gurvits', 'Sevidj', 'Laplas']])
-for i in range(len(matrix)):
-    v = ('!{}!' if i == vald[2] else '{}').format(vald[0][i])
-    m = ('!{}!' if i == minmax[2] else '{}').format(minmax[0][i])
-    g = ('!{}!' if i == gurvits[2] else '{}').format(gurvits[0][i])
-    s = ('!{}!' if i == sevidj[2] else '{}').format(sevidj[0][i])
-    l = ('!{}!' if i == laplas[2] else '{}').format(laplas[0][i])
-    table.add_rows([[names[i]]+matrix[i] + [v, m, g, s, l]], header=False)
+if __name__ == '__main__':
+    with open('input.csv') as csv_file:
+        stream_reader = csv.reader(csv_file, delimiter=',')
+        matrix = []
+        names = []
+        for row in stream_reader:
+            name = row[0]
+            names.append(name)
+            params = [float(i) for i in row[1:]]
+            matrix.append(params)
+    vald = vald_func(matrix)
+    minmax = minmax_func(matrix)
+    gurvits = gurvits_func(matrix)
+    sevidj = sevidj_func(matrix)
+    laplas = laplas_func(matrix)
 
-print(table.draw())
+    table = Texttable(max_width=150)
+    table.set_deco(Texttable.HEADER)
+    table.set_precision(1)
+    table.add_rows([['Actions'] + ['p{}'.format(i) for i in range(len(matrix[0]))] + ['Vald', 'Minmax', 'Gurvits', 'Sevidj', 'Laplas']])
+    for i in range(len(matrix)):
+        v = ('!{}!' if i == vald[2] else '{}').format(vald[0][i])
+        m = ('!{}!' if i == minmax[2] else '{}').format(minmax[0][i])
+        g = ('!{}!' if i == gurvits[2] else '{}').format(gurvits[0][i])
+        s = ('!{}!' if i == sevidj[2] else '{}').format(sevidj[0][i])
+        l = ('!{}!' if i == laplas[2] else '{}').format(laplas[0][i])
+        table.add_rows([[names[i]]+matrix[i] + [v, m, g, s, l]], header=False)
+
+    print(table.draw())
